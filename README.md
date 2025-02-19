@@ -1,24 +1,24 @@
-# README
+# Homey Task
 
-This README would normally document whatever steps are necessary to get the
-application up and running.
+Take home task for Homey
 
-Things you may want to cover:
+https://allentities.notion.site/Task-Development-Team-d5aae74100544f84981972edb3d922b0
 
-* Ruby version
+# Task
 
-* System dependencies
+Use Ruby on Rails to build a project conversation history. A user should be able to:
+* leave a comment
+* change the status of the project
 
-* Configuration
+The project conversation history should list comments and changes in status. 
 
-* Database creation
+Please don’t spend any more than 3 hours on this task.
 
-* Database initialization
+# Brief
 
-* How to run the test suite
+Treat this as if this was the only information given to you by a team member, and take the approach you would normally take in order to build the right product for the company. 
 
-* Services (job queues, cache servers, search engines, etc.)
-
-* Deployment instructions
-
-* ...
+To this extent:
+* Please write down the questions you would have asked your colleagues
+* Include answers that you might expect from them
+* Then build a project conversation based on the answers to the questions you raised.
