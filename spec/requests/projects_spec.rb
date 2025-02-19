@@ -1,11 +1,16 @@
+require 'rails_helper'
+
 RSpec.describe "Projects", type: :request do
+  let(:user) do
+    create(:user)
+  end
+
   let(:project) do
     create(:project)
   end
 
   before do
-    # TODO:
-    # sign_in(user)
+    sign_in(user)
   end
 
   describe "GET /index" do
