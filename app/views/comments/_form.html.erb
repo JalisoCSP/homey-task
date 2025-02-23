@@ -1,0 +1,11 @@
+<%= render "form_errors", object: comment %>
+
+<%= form_with(model: [project, comment], class: "relative flex-auto") do |form| %>
+  <div class="overflow-hidden rounded-lg pb-12 outline-1 -outline-offset-1 outline-gray-300 focus-within:outline-2 focus-within:-outline-offset-2 focus-within:outline-indigo-600">
+    <%= form.text_area :content, rows: 2, placeholder: "Add your comment...", class: "block w-full resize-none bg-transparent px-3 py-1.5 text-base text-gray-900 placeholder:text-gray-400 focus:outline-none sm:text-sm/6" %>
+  </div>
+
+  <div class="absolute inset-x-0 bottom-0 flex justify-between py-2 pr-2 pl-3">
+    <%= form.submit "Comment", class: "rounded-md bg-white px-2.5 py-1.5 text-sm font-semibold text-gray-900 ring-1 shadow-xs ring-gray-300 ring-inset hover:bg-gray-50" %>
+  </div>
+<% end %>
