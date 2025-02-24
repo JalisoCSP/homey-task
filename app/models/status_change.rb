@@ -6,6 +6,8 @@ class StatusChange < ApplicationRecord
 
   enum :status, STATUSES.index_by(&:itself)
 
+  validates :status, presence: true, inclusion: { in: STATUSES }
+
   def to_s
     status.humanize
   end

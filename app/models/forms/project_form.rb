@@ -1,21 +1,27 @@
 module Forms
   class ProjectForm
     include ActiveModel::Model
+    include ActiveModel::Attributes
 
-    attr_accessor :project, :user, :name, :status
+    attr_accessor :project, :user
+
+    attribute :name, :string
+    attribute :status, :string
 
     validates :name, presence: true
-    validates :status, presence: true
+    validates :status, presence: true, if: -> { project.new_record? }
+    validates :status, inclusion: { in: StatusChange::STATUSES }, allow_blank: true
 
     def initialize(project, user, params = {})
       @project = project
       @user = user
 
-      @name = params[:name] || project.name
-      @status = params[:status] || project.status
+      super(params)
     end
 
     def save
+      return false unless valid?
+
       ActiveRecord::Base.transaction do
         project.assign_attributes(
           user: user,
@@ -23,7 +29,7 @@ module Forms
         )
         project.save!
 
-        if status.present?
+        if status_changed?
           project.status_changes.create!(
             user: user,
             status: status
@@ -34,6 +40,10 @@ module Forms
       true
     rescue ActiveRecord::RecordInvalid
       false
+    end
+
+    def status_changed?
+      status.present? && project.status != status
     end
   end
 end
