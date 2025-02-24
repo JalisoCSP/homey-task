@@ -5,4 +5,8 @@ class StatusChange < ApplicationRecord
   STATUSES = %w[draft in_progress completed on_hold cancelled].freeze
 
   enum :status, STATUSES.index_by(&:itself)
+
+  def to_s
+    status.titleize
+  end
 end

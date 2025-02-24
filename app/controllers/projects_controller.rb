@@ -10,12 +10,14 @@ class ProjectsController < ApplicationController
 
   def new
     @project = Project.new
+    @form = Forms::ProjectForm.new(@project, current_user)
   end
 
   def create
-    @project = Project.new(project_params)
+    @project = Project.new
+    @form = Forms::ProjectForm.new(@project, current_user, project_params)
 
-    if @project.save
+    if @form.save
       redirect_to @project, notice: "Project created successfully."
     else
       render :new, status: :unprocessable_entity
@@ -23,10 +25,13 @@ class ProjectsController < ApplicationController
   end
 
   def edit
+    @form = Forms::ProjectForm.new(@project, current_user)
   end
 
   def update
-    if @project.update(project_params)
+    @form = Forms::ProjectForm.new(@project, current_user, project_params)
+
+    if @form.save
       redirect_to @project, notice: "Project updated successfully."
     else
       render :edit, status: :unprocessable_entity
@@ -48,5 +53,6 @@ class ProjectsController < ApplicationController
 
   def project_params
     params.require(:project).permit(:name, :status)
+      .with_defaults(user: current_user)
   end
 end
