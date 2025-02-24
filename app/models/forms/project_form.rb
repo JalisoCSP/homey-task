@@ -16,8 +16,6 @@ module Forms
     end
 
     def save
-      return false unless valid?
-
       ActiveRecord::Base.transaction do
         project.assign_attributes(
           user: user,
