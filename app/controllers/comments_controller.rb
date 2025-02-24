@@ -12,18 +12,6 @@ class CommentsController < ApplicationController
     end
   end
 
-  def destroy
-    @comment = @project.comments.find(params[:id])
-
-    # Could use pundit: authorize(@comment)
-    if @comment.user == current_user
-      @comment.destroy
-      redirect_to @project, notice: "Comment deleted."
-    else
-      redirect_to @project, alert: "You can only delete your own comments."
-    end
-  end
-
   private
 
   def set_project
