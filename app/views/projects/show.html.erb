@@ -25,7 +25,7 @@
             </svg>
           </dt>
           <dd class="text-sm/6 font-medium text-gray-900">
-            # project created by
+            <%= @project.user.name %>
           </dd>
         </div>
         <div class="mt-4 flex w-full flex-none gap-x-4 px-6">
@@ -52,7 +52,7 @@
             </svg>
           </dt>
           <dd class="text-sm/6 text-gray-500">
-            <%= @project.status.titleize %>
+            <%= @project.status %>
           </dd>
         </div>
       </dl>
