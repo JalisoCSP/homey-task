@@ -28,7 +28,8 @@ ActiveRecord::Schema[8.0].define(version: 2025_02_19_210730) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.string "name", null: false
-    t.string "status", default: "draft"
+    t.bigint "user_id", null: false
+    t.index ["user_id"], name: "index_projects_on_user_id"
   end
 
   create_table "status_changes", force: :cascade do |t|
@@ -55,6 +56,7 @@ ActiveRecord::Schema[8.0].define(version: 2025_02_19_210730) do
 
   add_foreign_key "comments", "projects"
   add_foreign_key "comments", "users"
+  add_foreign_key "projects", "users"
   add_foreign_key "status_changes", "projects"
   add_foreign_key "status_changes", "users"
 end
