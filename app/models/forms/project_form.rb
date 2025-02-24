@@ -12,7 +12,7 @@ module Forms
       @user = user
 
       @name = params[:name] || project.name
-      @status = params[:status]
+      @status = params[:status] || project.status
     end
 
     def save
