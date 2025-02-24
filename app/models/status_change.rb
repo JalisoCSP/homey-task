@@ -7,6 +7,6 @@ class StatusChange < ApplicationRecord
   enum :status, STATUSES.index_by(&:itself)
 
   def to_s
-    status.titleize
+    status.humanize
   end
 end
