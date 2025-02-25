@@ -1,13 +1,13 @@
 # Name of your application. Used to uniquely configure containers.
-service: homey_task
+service: homey
 
 # Name of the container image.
-image: your-user/homey_task
+image: cspetterson/homey
 
 # Deploy to these servers.
 servers:
   web:
-    - 192.168.0.1
+    - homey.craigpetterson.co.uk
   # job:
   #   hosts:
   #     - 192.168.0.1
@@ -19,13 +19,14 @@ servers:
 # Note: If using Cloudflare, set encryption mode in SSL/TLS setting to "Full" to enable CF-to-app encryption.
 proxy:
   ssl: true
-  host: app.example.com
+  host: homey.craigpetterson.co.uk
+  app_port: 3000
 
 # Credentials for your image host.
 registry:
   # Specify the registry server, if you're not using Docker Hub
   # server: registry.digitalocean.com / ghcr.io / ...
-  username: your-user
+  username: cspetterson
 
   # Always use an access token rather than real password when possible.
   password:
@@ -35,6 +36,10 @@ registry:
 env:
   secret:
     - RAILS_MASTER_KEY
+    - POSTGRES_URL
+    - POSTGRES_URL_CACHE
+    - POSTGRES_URL_QUEUE
+    - POSTGRES_URL_CABLE
   clear:
     # Run the Solid Queue Supervisor inside the web server's Puma process to do jobs.
     # When you start using multiple servers, you should split out job processing to a dedicated machine.
@@ -47,8 +52,8 @@ env:
     # WEB_CONCURRENCY: 2
 
     # Match this to any external database server to configure Active Record correctly
-    # Use homey_task-db for a db accessory server on same machine via local kamal docker network.
-    # DB_HOST: 192.168.0.2
+    # Use homey-db for a db accessory server on same machine via local kamal docker network.
+    DB_HOST: homey-postgres
 
     # Log everything from Rails
     # RAILS_LOG_LEVEL: debug
@@ -65,7 +70,7 @@ aliases:
 # Use a persistent storage volume for sqlite database files and local Active Storage files.
 # Recommended to change this to a mounted volume path that is backed up off server.
 volumes:
-  - "homey_task_storage:/rails/storage"
+  - "homey_storage:/rails/storage"
 
 
 # Bridge fingerprinted assets, like JS and CSS, between versions to avoid
@@ -92,25 +97,18 @@ builder:
 #   user: app
 
 # Use accessory services (secrets come from .kamal/secrets).
-# accessories:
-#   db:
-#     image: mysql:8.0
-#     host: 192.168.0.2
-#     # Change to 3306 to expose port to the world instead of just local network.
-#     port: "127.0.0.1:3306:3306"
-#     env:
-#       clear:
-#         MYSQL_ROOT_HOST: '%'
-#       secret:
-#         - MYSQL_ROOT_PASSWORD
-#     files:
-#       - config/mysql/production.cnf:/etc/mysql/my.cnf
-#       - db/production.sql:/docker-entrypoint-initdb.d/setup.sql
-#     directories:
-#       - data:/var/lib/mysql
-#   redis:
-#     image: redis:7.0
-#     host: 192.168.0.2
-#     port: 6379
-#     directories:
-#       - data:/data
+accessories:
+  postgres:
+    image: postgres:latest
+    host: homey.craigpetterson.co.uk
+    port: "127.0.0.1:3306:3306"
+    env:
+      clear:
+        POSTGRES_USER: "homey"
+        POSTGRES_DB: "homey_production"
+      secret:
+        - POSTGRES_PASSWORD
+    files:
+      - db/production.sql:/docker-entrypoint-initdb.d/setup.sql
+    directories:
+      - data:/var/lib/postgresql/data
