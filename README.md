@@ -43,3 +43,13 @@ Draft, In Progress, Completed, On Hold, Cancelled.
 
 **Do we need to notify anyone of new comments and status changes?**
 I'm going to skip adding emails
+
+## Login
+
+https://homey.craigpetterson.co.uk
+
+* cspetterson@hey.com
+* test@homey.co.uk
+* say@homey.co.uk
+
+All passwords: `password` (very secure!)
