@@ -20,7 +20,7 @@ servers:
 proxy:
   ssl: true
   host: homey.craigpetterson.co.uk
-  app_port: 3001
+  app_port: 3000
 
 # Credentials for your image host.
 registry:
@@ -101,7 +101,7 @@ accessories:
   postgres:
     image: postgres:latest
     host: homey.craigpetterson.co.uk
-    port: "127.0.0.1:4306:3306"
+    port: "127.0.0.1:3306:3306"
     env:
       clear:
         POSTGRES_USER: "homey"
