@@ -22,13 +22,13 @@ default: &default
 
 development:
   <<: *default
-  database: homey_task_development
+  database: homey_development
 
   # The specified database role being used to connect to PostgreSQL.
   # To create additional roles in PostgreSQL see `$ createuser --help`.
   # When left blank, PostgreSQL will use the default role. This is
   # the same name as the operating system user running Rails.
-  #username: homey_task
+  #username: homey
 
   # The password associated with the PostgreSQL role (username).
   #password:
@@ -56,7 +56,7 @@ development:
 # Do not set this db to the same as development or production.
 test:
   <<: *default
-  database: homey_task_test
+  database: homey_test
 
 # As with config/credentials.yml, you never want to store sensitive information,
 # like your database password, in your source code. If your source code is
@@ -81,18 +81,22 @@ test:
 production:
   primary: &primary_production
     <<: *default
-    database: homey_task_production
-    username: homey_task
-    password: <%= ENV["HOMEY_TASK_DATABASE_PASSWORD"] %>
+    database: homey_production
+    username: homey
+    password: <%= ENV["POSTGRES_PASSWORD"] %>
+    url: <%= ENV["POSTGRES_URL"] %>
   cache:
     <<: *primary_production
-    database: homey_task_production_cache
+    database: homey_production_cache
     migrations_paths: db/cache_migrate
+    url: <%= ENV["POSTGRES_URL_CACHE"] %>
   queue:
     <<: *primary_production
-    database: homey_task_production_queue
+    database: homey_production_queue
     migrations_paths: db/queue_migrate
+    url: <%= ENV["POSTGRES_URL_QUEUE"] %>
   cable:
     <<: *primary_production
-    database: homey_task_production_cable
+    database: homey_production_cable
     migrations_paths: db/cable_migrate
+    url: <%= ENV["POSTGRES_URL_CABLE"] %>
