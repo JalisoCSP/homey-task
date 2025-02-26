@@ -1,0 +1,17 @@
+<li class="relative flex gap-x-2">
+  <div class="flex-auto p-3">
+    <div class="flex justify-between gap-x-2">
+      <div class="py-0.5 text-xs/5 text-gray-500">
+        <span class="font-medium text-gray-900">
+          <%= comment.user.name %>
+        </span> commented
+      </div>
+      <%= time_tag(comment.created_at, class: "flex-none py-0.5 text-xs/5 text-gray-500") do %>
+        <%= time_ago_in_words(comment.created_at) %>
+      <% end%>
+    </div>
+    <p class="text-sm/6 text-gray-500">
+      <%= comment.content %>
+    </p>
+  </div>
+</li>

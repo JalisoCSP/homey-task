@@ -1,0 +1,21 @@
+<div id="<%= dom_id project %>">
+  <%= link_to project do %>
+    <li class="overflow-hidden rounded-xl border border-gray-200">
+      <div class="flex items-center gap-x-4 border-b border-gray-900/5 bg-gray-50 p-6">
+        <div class="text-sm/6 font-medium text-gray-900">
+          <%= project.name %>
+        </div>
+      </div>
+      <dl class="-my-3 divide-y divide-gray-100 px-6 py-4 text-sm/6">
+        <div class="flex justify-between gap-x-4 py-3">
+          <dt class="text-gray-500">
+            Status
+          </dt>
+          <dd class="text-gray-700">
+            <%= project.current_status %>
+          </dd>
+        </div>
+      </dl>
+    </li>
+  <% end %>
+</div>
